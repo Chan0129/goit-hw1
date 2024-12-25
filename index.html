@@ -27,7 +27,6 @@
 
         body {
             font-family: "Barlow", sans-serif;
-            /* Barlow font for body text */
             background-color: #003366;
             display: flex;
             justify-content: center;
@@ -36,6 +35,7 @@
             margin: 0;
             overflow: hidden;
             position: relative;
+            flex-direction: column;
         }
 
         .snow {
@@ -65,6 +65,7 @@
             cursor: pointer;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
             border-radius: 0;
+            margin-bottom: 20px;
         }
 
         .card-inner {
@@ -99,10 +100,7 @@
             animation: gradientAnimation 5s ease infinite;
             flex-direction: column;
             text-align: center;
-
-            /* Adds space around the card */
             border: 9px solid #fff;
-            /* White border with 2px thickness */
         }
 
         @keyframes gradientAnimation {
@@ -125,9 +123,7 @@
             font-size: 90px;
             font-weight: lighter;
             font-family: 'Pacifico', cursive;
-            /* Pacifico font for title */
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.1), 0 0 10px rgba(255, 255, 255, 0.1), 0 0 15px rgba(255, 255, 255, 0.1);
-
         }
 
         .image-container {
@@ -156,21 +152,19 @@
         }
 
         .message {
-            font-size: 18px;
+            font-size: 16px;
             color: #333;
             margin-top: 20px;
-            font-family: 'Barlow', sans-serif;
-            /* Barlow font for message */
             line-height: 1.5;
             text-align: left;
             letter-spacing: 1px;
+            font-family: 'Poppins', sans-serif;
         }
 
         .signature {
             font-size: 20px;
             color: #5fa8ec;
             font-family: 'Pacifico', cursive;
-            /* Pacifico font for signature */
             text-align: right;
             margin-top: 30px;
         }
@@ -189,6 +183,26 @@
             .message {
                 font-size: 16px;
             }
+        }
+
+        /* Play/Stop Button */
+        .play-stop-button {
+            background-color: #5fa8ec;
+            color: white;
+            font-size: 20px;
+            font-family: 'Pacifico', cursive;
+            padding: 10px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            z-index: 3;
+            transition: transform 0.2s ease;
+        }
+
+        .play-stop-button:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -224,12 +238,12 @@
                         life. It feels like we’ve known each other for much longer than just a few months, and I’m
                         grateful for the connection we’ve built. You’ve become an important part of my journey,
                         particularly at work, and I can’t thank you enough for always being there to listen and offer
-                        support.
+                        support.</p>
 
-                        You are genuinely one of the best people I know, and I feel fortunate to have you in my life.
-                        You deserve nothing but happiness, and I will always be cheering you on.
+                    <p>You are genuinely one of the best people I know, and I feel fortunate to have you in my life. You
+                        deserve nothing but happiness, and I will always be cheering you on.</p>
 
-                        I miss you dearly, and I look forward to seeing you soon.</p>
+                    <p>I miss you dearly, and I look forward to seeing you soon.</p>
 
                     <p>-Yang</p>
                 </div>
@@ -239,6 +253,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Play/Stop Button -->
+    <button class="play-stop-button" id="playStopButton">Play</button>
 
     <script>
         // Snowflake creation
@@ -272,10 +289,20 @@
             }
 
             flipped = !flipped; // Update flip state
+        });
 
-            // Play the Christmas music when the card is clicked
-            const audio = document.getElementById("christmasAudio");
-            audio.play();
+        // Play/Stop music
+        const playStopButton = document.getElementById("playStopButton");
+        const audio = document.getElementById("christmasAudio");
+
+        playStopButton.addEventListener("click", function () {
+            if (audio.paused) {
+                audio.play();
+                playStopButton.textContent = "Stop";
+            } else {
+                audio.pause();
+                playStopButton.textContent = "Play";
+            }
         });
     </script>
 </body>
