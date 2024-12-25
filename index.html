@@ -4,108 +4,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstudio</title>
+    <title>Card Design</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Preconnect and font links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Pacifico&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Snowflakes */
+        @keyframes snow {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        body {
+            font-family: "Barlow", sans-serif;
+            /* Barlow font for body text */
+            background-color: #003366;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .snow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: snow linear infinite;
+            opacity: 0.8;
+        }
+
+        .card {
+            perspective: 1000px;
+            z-index: 2;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 0;
+        }
+
+        .card-inner {
+            width: 480px;
+            height: 672px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #fff;
+            backface-visibility: hidden;
+        }
+
+        .card-front {
+            background: linear-gradient(180deg, #84c8ff 0%, #1c234b 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transform: rotateY(0deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background-size: 400% 400%;
+            animation: gradientAnimation 5s ease infinite;
+            flex-direction: column;
+            text-align: center;
+
+            /* Adds space around the card */
+            border: 9px solid #fff;
+            /* White border with 2px thickness */
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .card-front h1 {
+            margin: 0;
+            line-height: 90px;
+            font-size: 90px;
+            font-weight: lighter;
+            font-family: 'Pacifico', cursive;
+            /* Pacifico font for title */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.1), 0 0 10px rgba(255, 255, 255, 0.1), 0 0 15px rgba(255, 255, 255, 0.1);
+
+        }
+
+        .image-container {
+            width: 150px;
+            height: 150px;
+            margin-top: 20px;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-back {
+            padding: 30px;
+            transform: rotateY(180deg);
+            background-color: #ffffff;
+            border: 2px solid #546eff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .message {
+            font-size: 18px;
+            color: #333;
+            margin-top: 20px;
+            font-family: 'Barlow', sans-serif;
+            /* Barlow font for message */
+            line-height: 1.5;
+            text-align: left;
+            letter-spacing: 1px;
+        }
+
+        .signature {
+            font-size: 20px;
+            color: #5fa8ec;
+            font-family: 'Pacifico', cursive;
+            /* Pacifico font for signature */
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        /* Responsive Design for smaller screens */
+        @media (max-width: 600px) {
+            .card-inner {
+                width: 300px;
+                height: 420px;
+            }
+
+            .card-front h1 {
+                font-size: 24px;
+            }
+
+            .message {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <header>
-        <nav></nav>
-        <a href="#" class="logo-link">WEBSTUDIO</a>
-        <nav>
-            <ul>
-                <li><a href="#">Studio</a></li>
-                <li><a href="#">Portfolio</a></li>
-                <li><a href="#">Contacts</a></li>
-            </ul>
-        </nav>
-        <div class="contact-info">
-            <ul>
-                <li><a href="#">info@devstudio.com</a></li>
-                <li><a href="#">+11(000)111-11-11</a></li>
-            </ul>
+    <!-- Snowflakes container -->
+    <div class="snow"></div>
+
+    <!-- Audio element -->
+    <audio id="christmasAudio" preload="auto">
+        <source
+            src="/audio/Timothy_Infinite_-_We_Wish_You_a_Merry_Christmas_(Lofi_Version)_[Christmas_Lofi_Beats]_[_YouConvert.net_].mp3"
+            type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Card container -->
+    <div class="card" id="flipCard">
+        <div class="card-inner">
+            <!-- Front of the card -->
+            <div class="card-front">
+                <h1>Merry Christmas!</h1>
+                <div class="image-container">
+                    <img src="/img/943f86db-ea16-48f3-a5ee-f7c5a0d7ab5d.jfif" alt="Sample Image">
+                </div>
+            </div>
+
+            <!-- Back of the card -->
+            <div class="card-back">
+                <div class="message">
+                    <p>Dear BB🌹,</p>
+                    <p>Your message truly touched me, and I want to express how much I appreciate your presence in my
+                        life. It feels like we’ve known each other for much longer than just a few months, and I’m
+                        grateful for the connection we’ve built. You’ve become an important part of my journey,
+                        particularly at work, and I can’t thank you enough for always being there to listen and offer
+                        support.
+
+                        You are genuinely one of the best people I know, and I feel fortunate to have you in my life.
+                        You deserve nothing but happiness, and I will always be cheering you on.
+
+                        I miss you dearly, and I look forward to seeing you soon.</p>
+
+                    <p>-Yang</p>
+                </div>
+                <div class="signature">
+                    <p>Merry Christmas💙🖤</p>
+                </div>
+            </div>
         </div>
-    </header>
+    </div>
 
-    <main>
-        <h1>Effective Solutions for Your Business</h1>
+    <script>
+        // Snowflake creation
+        function createSnowflakes() {
+            const snowContainer = document.querySelector(".snow");
+            for (let i = 0; i < 100; i++) {
+                const snowflake = document.createElement("div");
+                snowflake.classList.add("snowflake");
+                snowflake.style.left = Math.random() * 100 + "%";
+                snowflake.style.animationDuration = Math.random() * 5 + 3 + "s"; // random falling speed
+                snowflake.style.animationDelay = Math.random() * 5 + "s"; // random start delay
+                snowflake.style.opacity = Math.random(); // random opacity
+                snowContainer.appendChild(snowflake);
+            }
+        }
 
-        <button type="button">Order Service</button>
+        // Initialize snowflakes
+        createSnowflakes();
 
-        <section>
-            <ul>
-                <h2>
-                    <li>Stategy</li>
-                </h2>
-                <p>Our goal is to identify the business problem to walk away with the perfect and creative solution.</p>
-                <h2>
-                    <li>Punctuality</li>
-                </h2>
-                <p>Bring the key message to the brand's audience for the best price within the shortest possible time.
-                </p>
-                <h2>
-                    <li>Diligence</li>
-                </h2>
-                <p>Research and confirm brands that present the strongest digital growth opportunities and minimize
-                    risk.</p>
-                <h2>
-                    <li>Technologies</li>
-                </h2>
-                <p>Design practice focused on digital experiences. We bring forth a deep passion for problem-solving.
-                </p>
-            </ul>
-        </section>
-        </section>
+        // Card flip function
+        let flipped = false; // Track the flip state
 
-        <section>
-            <h2>What are we doing</h2>
-            <ul>
-                <li><img src="images/Monitor.jpg" alt="A picuture of a computer monitor" width="500" height="488"></li>
-                <li><img src="images/Phone.jpg" alt="A picture of a phone" width="500" height="383"></li>
-                <li><img src="images/Laptop&Phone.jpg" alt="A picture of a laptop and phone" width="500" height="506">
-                </li>
-            </ul>
-        </section>
+        document.querySelector('#flipCard').addEventListener('click', function () {
+            const cardInner = document.querySelector(".card-inner");
 
-        <section>
-            <h2>Our Team</h2>
-            <ul>
-                <li><img src="images/Mark.jpg" alt="Picture of Mark" width="500" height="431"></li>
-                <h3>Mark Guerrero</h3>
-                <p>Product Designer</p>
-            </ul>
+            // Toggle flip state
+            if (flipped) {
+                cardInner.style.transform = "rotateY(0deg)"; // Front side
+            } else {
+                cardInner.style.transform = "rotateY(180deg)"; // Back side
+            }
 
-            <ul>
-                <li><img src="images/Daniel.jpg" alt="Picture of Mark" width="500" height="431"></li>
-                <h3>Daniel Ford</h3>
-                <p>Frontend Developer</p>
-            </ul>
+            flipped = !flipped; // Update flip state
 
-            <ul>
-                <li><img src="images/Camila.jpg" alt="Picture of Camila" width="500" height="431"></li>
-                <h3>Camila Garcia</h3>
-                <p>Marketing</p>
-            </ul>
-
-            <ul>
-                <li><img src="images/Tom.jpg" alt="Picture of Daniel" width="500" height="431"></li>
-                <h3>Daniel Wilson</h3>
-                <p>UI Designer</p>
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <a href="#" class="logo-link">WEBSTUDIO</a>
-        <div class="contact-info">
-            <p>
-Increase the flow of customer and<br>sales for your business with digital<br>marketing & growth solutions.
-            </pre>
-
-        </div>
-    </footer>
-
-
-
+            // Play the Christmas music when the card is clicked
+            const audio = document.getElementById("christmasAudio");
+            audio.play();
+        });
+    </script>
 </body>
 
 </html>
